@@ -1,6 +1,6 @@
 FROM php:8.2-cli
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
@@ -17,11 +17,20 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+# Copy source code
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+# Copy .env and generate APP_KEY
+RUN cp .env.example .env && \
+    composer install --no-dev --optimize-autoloader && \
+    chmod -R 775 storage bootstrap/cache && \
+    php artisan key:generate && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
 
-# Laravel config caching
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+# Expose port
+EXPOSE 8080
 
+# Start server
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
