@@ -1,5 +1,4 @@
-# Use the official PHP image with Nginx
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -11,7 +10,6 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    nginx \
     && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
 
 # Install Composer
@@ -23,20 +21,12 @@ WORKDIR /var/www/html
 # Copy source code
 COPY . .
 
-# Copy .env and generate APP_KEY
-RUN cp .env.example .env && \
-    composer install --no-dev --optimize-autoloader && \
-    chmod -R 775 storage bootstrap/cache && \
-    php artisan key:generate && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
+# Laravel setup
+RUN composer install --no-dev --optimize-autoloader && \
+    chmod -R 775 storage bootstrap/cache
 
-# Copy Nginx configuration
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Expose correct port
+EXPOSE 8080
 
-# Expose port
-EXPOSE 80
-
-# Start Nginx and PHP-FPM
-CMD ["sh", "-c", "service nginx start && php-fpm"]
+# Start Laravel using built-in server
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
