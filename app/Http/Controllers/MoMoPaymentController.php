@@ -18,8 +18,8 @@ class MoMoPaymentController extends Controller
     {
         $orderInfo = 'pay with MoMo';
         $partnerCode = 'MOMO';
-        $redirectUrl = 'http://localhost:5173/';
-        $ipnUrl = 'https://24c5-2402-9d80-36a-eaca-f931-92d9-1b20-2ee1.ngrok-free.app/api/callback';
+        $redirectUrl = 'https://datvexemphim-psi.vercel.app/';
+        $ipnUrl = 'https://be-da-web-nam4.onrender.com/api/callback';
         $requestType = "payWithMethod";
         $amount = $request->amount;
         $orderId = $request->orderId;
@@ -80,7 +80,7 @@ class MoMoPaymentController extends Controller
     public function ipn(Request $request)
     {
         $orderId = $request->input('orderId');
-        $requestId = $orderId; 
+        $requestId = $orderId;
 
         if (empty($orderId)) {
             return response()->json([
