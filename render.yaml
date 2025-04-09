@@ -1,24 +1,16 @@
 services:
   - type: web
-    name: laravel-api
-    env: php
-    region: oregon
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:clear
-      php artisan route:clear
-      php artisan view:clear
-      php artisan migrate --force
-    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    name: movie-api
+    env: docker
+    plan: free
+    branch: main
+    buildCommand: ""
+    startCommand: ""
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
         value: base64:IaH6y4rWaqXxdinzLuEw1VFHukYwprqXMg+klwaG1fQ=
-      - key: APP_DEBUG
-        value: false
-      - key: APP_URL
-        value: https://laravel-api.onrender.com # bạn có thể đổi sau khi có URL thật
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
@@ -31,26 +23,3 @@ services:
         value: avnadmin
       - key: DB_PASSWORD
         fromSecret: DB_PASSWORD
-      - key: SESSION_DRIVER
-        value: file
-      - key: QUEUE_CONNECTION
-        value: sync
-      - key: CACHE_STORE
-        value: file
-      - key: APP_LOCALE
-        value: en
-      - key: APP_FALLBACK_LOCALE
-        value: en
-      - key: VITE_APP_NAME
-        value: Laravel
-      - key: L5_SWAGGER_GENERATE_ALWAYS
-        value: true
-      - key: L5_SWAGGER_API_VERSION
-        value: 1.0.0
-      - key: L5_SWAGGER_BASE_PATH
-        value: /api
-      - key: L5_SWAGGER_TITLE
-        value: "API Đặt Vé Xem Phim"
-      - key: L5_SWAGGER_DESCRIPTION
-        value: "Tài liệu API cho hệ thống đặt vé xem phim"
-    autoDeploy: true
