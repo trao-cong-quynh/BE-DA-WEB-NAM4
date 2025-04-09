@@ -33,4 +33,4 @@ RUN cp .env.example .env && \
 EXPOSE 8080
 
 # Start server
-CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t public"]
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t public"]
