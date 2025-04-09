@@ -1,4 +1,5 @@
-FROM php:8.2-cli
+# Use the official PHP image with Nginx
+FROM php:8.2-fpm
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -10,11 +11,13 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    nginx \
     && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www/html
 
 # Copy source code
@@ -29,8 +32,11 @@ RUN cp .env.example .env && \
     php artisan route:cache && \
     php artisan view:cache
 
-# Expose port
-EXPOSE 8080
+# Copy Nginx configuration
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Start server
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t public"]
+# Expose port
+EXPOSE 80
+
+# Start Nginx and PHP-FPM
+CMD ["sh", "-c", "service nginx start && php-fpm"]
