@@ -24,7 +24,8 @@ WORKDIR /var/www
 COPY . .
 
 # Cài đặt Laravel
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader \
+    && php artisan storage:link
 
 # Phân quyền thư mục storage & bootstrap/cache
 RUN chown -R www-data:www-data /var/www \
