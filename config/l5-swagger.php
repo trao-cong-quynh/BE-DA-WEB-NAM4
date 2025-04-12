@@ -28,7 +28,7 @@ return [
                 /*
                  * File name of the generated json documentation file
                  */
-                'docs_json' => 'api-docs.json',
+                'docs_json' => 'https://be-da-web-nam4.onrender.com/docs?api-docs.json',
 
                 /*
                  * File name of the generated YAML documentation file
