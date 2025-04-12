@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{config('l5-swagger.documentations.'.$documentation.'.api.title')}}</title>
+    <!-- Sử dụng HTTPS cho tài nguyên Swagger UI -->
     <link rel="stylesheet" type="text/css" href="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui.css')) }}">
     <link rel="icon" type="image/png" href="{{ secure_url(l5_swagger_asset($documentation, 'favicon-32x32.png')) }}" sizes="32x32"/>
     <link rel="icon" type="image/png" href="{{ secure_url(l5_swagger_asset($documentation, 'favicon-16x16.png')) }}" sizes="16x16"/>
@@ -53,11 +54,11 @@
 <body @if(config('l5-swagger.defaults.ui.display.dark_mode')) id="dark-mode" @endif>
 <div id="swagger-ui"></div>
 
+<!-- Sử dụng HTTPS cho các tài nguyên JS Swagger UI -->
 <script src="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui-bundle.js')) }}"></script>
 <script src="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js')) }}"></script>
 <script>
     window.onload = function() {
-        // Build a system
         const ui = SwaggerUIBundle({
             dom_id: '#swagger-ui',
             url: "{!! $urlToDocs !!}",
