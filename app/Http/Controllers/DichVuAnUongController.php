@@ -10,6 +10,28 @@ class DichVuAnUongController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/dichvuanuong",
+     *     summary="Lấy danh sách các dịch vụ ăn uống",
+     *     tags={"Dịch vụ ăn uống"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Danh sách dịch vụ ăn uống",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="ten_dv", type="string", example="Combo bắp + nước"),
+     *                 @OA\Property(property="gia_tien", type="number", format="float", example=45000)
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function index()
     {
         $dv = DvAnUong::all();

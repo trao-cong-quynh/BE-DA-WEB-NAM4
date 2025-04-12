@@ -14,6 +14,40 @@ class MoMoPaymentController extends Controller
 {
     protected $accessKey = 'F8BBA842ECF85';
     protected $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/create-payment",
+     *     summary="Tạo yêu cầu thanh toán MoMo",
+     *     tags={"Thanh toán MoMo"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"amount", "orderId"},
+     *             @OA\Property(property="amount", type="number", format="float", example=100000),
+     *             @OA\Property(property="orderId", type="string", example="VE123456789")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thành công, trả về thông tin thanh toán",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Payment processed successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Lỗi trong việc tạo yêu cầu thanh toán",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Không thể tạo yêu cầu thanh toán")
+     *         )
+     *     )
+     * )
+     */
     public function createPayment(Request $request)
     {
         $orderInfo = 'pay with MoMo';
@@ -58,6 +92,38 @@ class MoMoPaymentController extends Controller
         return response()->json(['error' => 'Không thể tạo yêu cầu thanh toán'], 500);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/callback",
+     *     summary="Callback MoMo khi thanh toán thành công hoặc thất bại",
+     *     tags={"Thanh toán MoMo"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"resultCode", "orderId"},
+     *             @OA\Property(property="resultCode", type="string", example="0"),
+     *             @OA\Property(property="orderId", type="string", example="VE123456789")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thanh toán thành công",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Payment processed successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Thanh toán thất bại",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", example="fail")
+     *         )
+     *     )
+     * )
+     */
 
     public function callback(Request $request)
     {
@@ -76,7 +142,46 @@ class MoMoPaymentController extends Controller
         return response()->json(['status' => 'fail'], 400);
     }
 
-
+    /**
+     * @OA\Post(
+     *     path="/api/checkTrasaction",
+     *     summary="Thông báo IPN từ MoMo về trạng thái thanh toán",
+     *     tags={"Thanh toán MoMo"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"orderId"},
+     *             @OA\Property(property="orderId", type="string", example="VE123456789")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Thanh toán đã được xác nhận",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Payment processed successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Thanh toán không thành công",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", example="fail"),
+     *             @OA\Property(property="message", type="string", example="Payment failed")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Không thể kiểm tra trạng thái giao dịch",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Unable to check transaction status")
+     *         )
+     *     )
+     * )
+     */
     public function ipn(Request $request)
     {
         $orderId = $request->input('orderId');
@@ -91,7 +196,6 @@ class MoMoPaymentController extends Controller
         $rawSignature = "accessKey={$this->accessKey}" . "&orderId={$orderId}" . "&partnerCode=MOMO" .
             "&requestId={$requestId}";
         $signature = hash_hmac('sha256', $rawSignature, $this->secretKey);
-
         $requestBody = [
             'partnerCode' => 'MOMO',
             'requestId' => $orderId,
@@ -120,7 +224,6 @@ class MoMoPaymentController extends Controller
                 return response()->json(['status' => 'fail', 'message' => 'Payment failed'], 400);
             }
         }
-
         return response()->json(['error' => 'Unable to check transaction status'], 500);
     }
 }

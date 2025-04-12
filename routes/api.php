@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\BookTicketController;
 use App\Http\Controllers\DichVuAnUongController;
 use App\Http\Controllers\GheController;
@@ -12,9 +13,6 @@ use App\Http\Controllers\SuatChieuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/**
- * @OA\PathItem(path="/api")
- */
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

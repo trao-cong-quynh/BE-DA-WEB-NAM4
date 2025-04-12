@@ -7,45 +7,52 @@ use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
 
-/**
- * @OA\Tag(
- *     name="SuatChieu",
- *     description="API liên quan đến suất chiếu"
- * )
- */
-
 class SuatChieuController extends Controller
 {
+
     /**
+     * Lấy danh sách suất chiếu theo mã phim
      * @OA\Get(
      *     path="/api/suatchieu/phim/{ma_phim}",
      *     summary="Lấy danh sách suất chiếu theo mã phim",
-     *     tags={"SuatChieu"},
+     *     description="API này dùng để lấy tất cả suất chiếu cho một phim.",
+     *     tags={"Suất Chiếu"},
      *     @OA\Parameter(
      *         name="ma_phim",
      *         in="path",
      *         required=true,
-     *         description="Mã phim cần lấy suất chiếu",
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(
+     *             type="string",
+     *             example="PH001"
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Danh sách suất chiếu",
-     *         @OA\JsonContent(type="array",
-     *             @OA\Items(
-     *                 @OA\Property(property="ten_rap", type="string", example="Rạp CGV Nguyễn Trãi"),
-     *                 @OA\Property(property="dia_chi", type="string", example="123 Nguyễn Trãi, Quận 1, TP.HCM"),
-     *                 @OA\Property(property="suat_chieu", type="array",
-     *                     @OA\Items(
-     *                         @OA\Property(property="phong", type="string", example="Phòng 1"),
-     *                         @OA\Property(property="thoi_gian_bd", type="string", example="14:00"),
-     *                         @OA\Property(property="ngay_chieu", type="string", example="25-03-2025")
-     *                     )
+     *         description="Danh sách suất chiếu của phim",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="ma_rap", type="string", example="RP001"),
+     *             @OA\Property(property="ten_rap", type="string", example="Rạp Phim ABC"),
+     *             @OA\Property(property="dia_chi", type="string", example="123 Đường ABC, Quận 1, TP.HCM"),
+     *             @OA\Property(
+     *                 property="suat_chieu",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="ma_suat_chieu", type="string", example="SC001"),
+     *                     @OA\Property(property="ma_phong", type="string", example="P001"),
+     *                     @OA\Property(property="phong", type="string", example="Phòng 1"),
+     *                     @OA\Property(property="thoi_gian_bd", type="string", example="10:00"),
+     *                     @OA\Property(property="ngay_chieu", type="string", example="12-04-2025")
      *                 )
      *             )
      *         )
      *     ),
-     *     @OA\Response(response=404, description="Không có suất chiếu")
+     *     @OA\Response(
+     *         response=404,
+     *         description="Không có suất chiếu cho phim này",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Không có suất chiếu cho phim này")
+     *         )
+     *     )
      * )
      */
 
@@ -87,9 +94,6 @@ class SuatChieuController extends Controller
 
         return response()->json(array_values($data));
     }
-
-
-
 
 
     /**

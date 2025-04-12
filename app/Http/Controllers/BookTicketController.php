@@ -29,6 +29,44 @@ class BookTicketController extends Controller
         //
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/ve",
+     *     summary="Đặt vé xem phim",
+     *     description="API này dùng để đặt vé bao gồm: ghế, loại vé, dịch vụ ăn uống và tính tổng tiền.",
+     *     tags={"Đặt vé"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"ma_nguoi_dung", "ma_sc", "tong_tien", "loai_ve", "ghe", "ngay_dat"},
+     *             @OA\Property(property="ma_nguoi_dung", type="string", example="ND001"),
+     *             @OA\Property(property="ma_sc", type="string", example="SC002"),
+     *             @OA\Property(property="tong_tien", type="string", example="150000"),
+     *             @OA\Property(property="loai_ve", type="string", example="LV01:1,LV02:2"),
+     *             @OA\Property(property="ghe", type="string", example="G01,G02,G03"),
+     *             @OA\Property(property="ngay_dat", type="string", format="date", example="2025-04-12"),
+     *             @OA\Property(property="bap_nuoc", type="string", example="DV01:1,DV02:2", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Đặt vé thành công",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="ma_ve", type="string", example="VE1712900153123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Lỗi xử lý",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Lỗi khi đặt vé!"),
+     *             @OA\Property(property="error", type="string", example="Chi tiết lỗi từ server")
+     *         )
+     *     )
+     * )
+     */
 
     public function store(Request $request)
     {
