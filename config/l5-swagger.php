@@ -18,27 +18,27 @@ return [
                 /*
                  * Edit to include full URL in ui for assets
                  */
-                'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
+                'use_absolute_path' => true,
 
                 /*
                  * Edit to set path where swagger ui assets should be stored
                  */
-                'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'https://be-da-web-nam4.onrender.com/vendor/swagger-api/swagger-ui/dist/'),
+                'swagger_ui_assets_path' => 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.50.0/',
 
                 /*
                  * File name of the generated json documentation file
                  */
-                'docs_json' => 'https://be-da-web-nam4.onrender.com/api-docs.json',
+                'docs_json' => 'https://your-cdn-url.com/api-docs.json',
 
                 /*
                  * File name of the generated YAML documentation file
                  */
-                'docs_yaml' => 'https://be-da-web-nam4.onrender.com/api-docs.yaml',
+                'docs_yaml' => 'https://your-cdn-url.com/api-docs.yaml',
 
                 /*
                  * Set this to `json` or `yaml` to determine which documentation file to use in UI
                  */
-                'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
+                'format_to_use_for_docs' => 'json',
 
                 /*
                  * Absolute paths to directory containing the swagger annotations are stored.
@@ -91,7 +91,7 @@ return [
             /*
              * Edit to set the api's base path
              */
-            'base' => env('L5_SWAGGER_BASE_PATH', 'https://be-da-web-nam4.onrender.com'),
+            'base' => env('L5_SWAGGER_BASE_PATH', null),
 
             /*
              * Absolute path to directories that should be excluded from scanning
@@ -116,7 +116,7 @@ return [
                  * '/pets/',
                  * '/store/',
                  * ],
-                 * ],
+                 * ],.
                  */
             ],
 
@@ -237,7 +237,7 @@ return [
          * Set this to `true` in development mode so that docs would be regenerated on each request
          * Set this to `false` to disable swagger generation on production
          */
-        'generate_always' => env('L5_SWAGGER_GENERATE_ALWAYS', true),
+        'generate_always' => env('L5_SWAGGER_GENERATE_ALWAYS', false),
 
         /*
          * Set this to `true` to generate a copy of documentation in yaml format
@@ -308,12 +308,11 @@ return [
                 ],
             ],
         ],
-
         /*
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://be-da-web-nam4.onrender.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
         ],
     ],
 ];
