@@ -312,7 +312,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://my-default-host.com'),
+           'swagger_ui_assets_path' => env('L5_SWAGGER_UI_ASSETS_PATH', 'https://be-da-web-nam4.onrender.com/vendor/swagger-api/swagger-ui/dist/'),
         ],
     ],
 ];
