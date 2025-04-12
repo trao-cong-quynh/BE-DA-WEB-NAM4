@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>{{config('l5-swagger.documentations.'.$documentation.'.api.title')}}</title>
     <!-- Sử dụng HTTPS cho tài nguyên Swagger UI -->
-    <link rel="stylesheet" type="text/css" href="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui.css')) }}">
-    <link rel="icon" type="image/png" href="{{ secure_url(l5_swagger_asset($documentation, 'favicon-32x32.png')) }}" sizes="32x32"/>
-    <link rel="icon" type="image/png" href="{{ secure_url(l5_swagger_asset($documentation, 'favicon-16x16.png')) }}" sizes="16x16"/>
+    <link rel="stylesheet" type="text/css" href="https://be-da-web-nam4.onrender.com/docs/asset/swagger-ui.css?v=994a2f7cde1088d30c09c74c0488c9e3">
+    <link rel="icon" type="image/png" href="https://be-da-web-nam4.onrender.com/docs/asset/favicon-32x32.png?v=40d4f2c38d1cd854ad463f16373cbcb6" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="https://be-da-web-nam4.onrender.com/docs/asset/favicon-16x16.png?v=f0ae831196d55d8f4115b6c5e8ec5384" sizes="16x16"/>
     <style>
     html {
         box-sizing: border-box;
@@ -55,8 +55,8 @@
 <div id="swagger-ui"></div>
 
 <!-- Sử dụng HTTPS cho các tài nguyên JS Swagger UI -->
-<script src="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui-bundle.js')) }}"></script>
-<script src="{{ secure_url(l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js')) }}"></script>
+<script src="https://be-da-web-nam4.onrender.com/docs/asset/swagger-ui-bundle.js?v=e1fde8626b20454971dde8e3efc96b2b"></script>
+<script src="https://be-da-web-nam4.onrender.com/docs/asset/swagger-ui-standalone-preset.js?v=c52d69e3948ac5fdffc432e95fc737a3"></script>
 <script>
     window.onload = function() {
         const ui = SwaggerUIBundle({
