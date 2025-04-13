@@ -13,6 +13,8 @@ return [
                  * Route for accessing api documentation interface
                  */
                 'api' => 'api/documentation',  // Đảm bảo đường dẫn này đúng và có thể truy cập
+                'docs' => 'docs',              // Kiểm tra xem đường dẫn này có đúng với route của bạn không
+                'swagger_json' => 'docs/api-docs.json',
             ],
 
             'paths' => [
