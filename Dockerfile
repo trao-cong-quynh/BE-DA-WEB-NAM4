@@ -23,8 +23,9 @@ WORKDIR /var/www
 
 COPY . .
 
-# Cài đặt Laravel
+# Cài đặt Laravel và publish assets
 RUN composer install --no-dev --optimize-autoloader \
+    && php artisan vendor:publish --provider="L5Swagger\L5SwaggerServiceProvider" --tag=swagger-assets \
     && php artisan storage:link
 
 # Phân quyền thư mục storage & bootstrap/cache
