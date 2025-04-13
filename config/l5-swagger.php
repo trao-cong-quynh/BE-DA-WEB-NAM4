@@ -273,9 +273,7 @@ return [
          * Swagger UI configuration parameters
          */
 
-        'cdn' => [
-            'enabled' => true,
-        ],
+
         'ui' => [
             'display' => [
                 'dark_mode' => env('L5_SWAGGER_UI_DARK_MODE', false),
