@@ -40,8 +40,6 @@ return [
                  */
                 'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
 
-                'assets' => 'https',
-
                 /*
                  * Absolute paths to directory containing the swagger annotations are stored.
                  */
@@ -314,7 +312,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'https://be-da-web-nam4.onrender.com'),
         ],
     ],
 ];
