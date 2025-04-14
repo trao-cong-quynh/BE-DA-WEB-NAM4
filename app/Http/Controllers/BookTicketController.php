@@ -8,6 +8,7 @@ use App\Models\DatVe;
 use App\Models\DvAnUong;
 use App\Models\LoaiVe;
 use App\Models\VeDat;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -93,7 +94,7 @@ class BookTicketController extends Controller
 
             $datve->tong_so_ve = $tong_so_ve;
             $datve->trang_thai = 'Đang chờ thanh toán';
-            $datve->ngay_dat = $request->ngay_dat;
+            $datve->ngay_dat = Carbon::parse($request->ngay_dat);
             $datve->save();
 
             $gheId = explode(',', $request->ghe);
