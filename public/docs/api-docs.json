@@ -120,6 +120,100 @@
                 }
             }
         },
+        "/api/dangnhap": {
+            "post": {
+                "tags": [
+                    "Đăng Nhập"
+                ],
+                "summary": "Đăng nhập người dùng",
+                "description": "Đăng nhập bằng email hoặc số điện thoại và mật khẩu. Trả về access_token nếu thành công.",
+                "operationId": "b633e4b9589f6cd0137ec7af9015d185",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email_or_sdt",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email_or_sdt": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Đăng nhập thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Đăng nhập thành công"
+                                        },
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV..."
+                                        },
+                                        "nguoi_dung": {
+                                            "properties": {
+                                                "ma_nguoi_dung": {
+                                                    "type": "string",
+                                                    "example": "ND001"
+                                                },
+                                                "ho_ten": {
+                                                    "type": "string",
+                                                    "example": "Nguyễn Văn A"
+                                                },
+                                                "vai_tro": {
+                                                    "type": "string",
+                                                    "example": "khach_hang"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Sai thông tin đăng nhập",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sai thông tin đăng nhập"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/dichvuanuong": {
             "get": {
                 "tags": [
@@ -417,6 +511,135 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Unable to check transaction status"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dangki": {
+            "post": {
+                "tags": [
+                    "Đăng Ký"
+                ],
+                "summary": "Đăng ký người dùng mới",
+                "description": "Tạo tài khoản mới với thông tin đầy đủ",
+                "operationId": "e61f26cea69e55c6a45d39167f16ec18",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "ho_ten",
+                                    "email",
+                                    "mat_khau",
+                                    "sdt",
+                                    "vai_tro",
+                                    "ngay_sinh",
+                                    "gioi_tinh"
+                                ],
+                                "properties": {
+                                    "ho_ten": {
+                                        "type": "string",
+                                        "example": "Nguyễn Văn A"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "mat_khau": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    },
+                                    "sdt": {
+                                        "type": "string",
+                                        "example": "0912345678"
+                                    },
+                                    "vai_tro": {
+                                        "type": "string",
+                                        "example": "khach_hang"
+                                    },
+                                    "ngay_sinh": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2000-01-01"
+                                    },
+                                    "gioi_tinh": {
+                                        "type": "string",
+                                        "example": "Nam"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Đăng ký thành công",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Đăng kí thành công"
+                                        },
+                                        "nguoi_dung": {
+                                            "properties": {
+                                                "ho_ten": {
+                                                    "type": "string",
+                                                    "example": "Nguyễn Văn A"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                },
+                                                "sdt": {
+                                                    "type": "string",
+                                                    "example": "0912345678"
+                                                },
+                                                "vai_tro": {
+                                                    "type": "string",
+                                                    "example": "khach_hang"
+                                                },
+                                                "ngay_sinh": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2000-01-01"
+                                                },
+                                                "gioi_tinh": {
+                                                    "type": "string",
+                                                    "example": "Nam"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dữ liệu không hợp lệ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Dữ liệu ko hợp lệ"
+                                        },
+                                        "error": {
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -759,87 +982,89 @@
                     "Suất Chiếu"
                 ],
                 "summary": "Lấy danh sách suất chiếu theo mã phim",
-                "description": "API này dùng để lấy tất cả suất chiếu cho một phim.",
+                "description": "API này dùng để lấy tất cả suất chiếu của một phim, có thể lọc theo ngày chiếu.",
                 "operationId": "2a0249d35ac0b9a512c4965c180546c6",
                 "parameters": [
                     {
                         "name": "ma_phim",
                         "in": "path",
+                        "description": "Mã phim cần tìm suất chiếu",
                         "required": true,
                         "schema": {
                             "type": "string",
                             "example": "PH001"
                         }
+                    },
+                    {
+                        "name": "ngay_chieu",
+                        "in": "query",
+                        "description": "Lọc theo ngày chiếu (định dạng: YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-04-12"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Danh sách suất chiếu của phim",
+                        "description": "Danh sách suất chiếu theo rạp (trống nếu không có dữ liệu)",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "ma_rap": {
-                                            "type": "string",
-                                            "example": "RP001"
-                                        },
-                                        "ten_rap": {
-                                            "type": "string",
-                                            "example": "Rạp Phim ABC"
-                                        },
-                                        "dia_chi": {
-                                            "type": "string",
-                                            "example": "123 Đường ABC, Quận 1, TP.HCM"
-                                        },
-                                        "suat_chieu": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "ma_suat_chieu": {
-                                                        "type": "string",
-                                                        "example": "SC001"
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "ma_rap": {
+                                                "type": "string",
+                                                "example": "RP001"
+                                            },
+                                            "ten_rap": {
+                                                "type": "string",
+                                                "example": "Rạp Galaxy Nguyễn Du"
+                                            },
+                                            "dia_chi": {
+                                                "type": "string",
+                                                "example": "123 Nguyễn Du, Q.1, TP.HCM"
+                                            },
+                                            "suat_chieu": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "ma_suat_chieu": {
+                                                            "type": "string",
+                                                            "example": "SC001"
+                                                        },
+                                                        "ma_phong": {
+                                                            "type": "string",
+                                                            "example": "P001"
+                                                        },
+                                                        "phong": {
+                                                            "type": "string",
+                                                            "example": "Phòng 1"
+                                                        },
+                                                        "thoi_gian_bd": {
+                                                            "type": "string",
+                                                            "example": "14:00"
+                                                        },
+                                                        "ngay_chieu": {
+                                                            "type": "string",
+                                                            "example": "12-04-2025"
+                                                        }
                                                     },
-                                                    "ma_phong": {
-                                                        "type": "string",
-                                                        "example": "P001"
-                                                    },
-                                                    "phong": {
-                                                        "type": "string",
-                                                        "example": "Phòng 1"
-                                                    },
-                                                    "thoi_gian_bd": {
-                                                        "type": "string",
-                                                        "example": "10:00"
-                                                    },
-                                                    "ngay_chieu": {
-                                                        "type": "string",
-                                                        "example": "12-04-2025"
-                                                    }
-                                                },
-                                                "type": "object"
+                                                    "type": "object"
+                                                }
                                             }
-                                        }
-                                    },
-                                    "type": "object"
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
                     },
-                    "404": {
-                        "description": "Không có suất chiếu cho phim này",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Không có suất chiếu cho phim này"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                    "500": {
+                        "description": "Lỗi hệ thống"
                     }
                 }
             }
@@ -908,12 +1133,24 @@
                 },
                 "type": "object"
             }
+        },
+        "securitySchemes": {
+            "api_key_security_example": {
+                "type": "apiKey",
+                "description": "A short description for security scheme",
+                "name": "api_key",
+                "in": "header"
+            }
         }
     },
     "tags": [
         {
             "name": "Đặt vé",
             "description": "Đặt vé"
+        },
+        {
+            "name": "Đăng Nhập",
+            "description": "Đăng Nhập"
         },
         {
             "name": "Dịch vụ ăn uống",
@@ -926,6 +1163,10 @@
         {
             "name": "Thanh toán MoMo",
             "description": "Thanh toán MoMo"
+        },
+        {
+            "name": "Đăng Ký",
+            "description": "Đăng Ký"
         },
         {
             "name": "Phim",
