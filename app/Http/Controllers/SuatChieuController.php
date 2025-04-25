@@ -10,51 +10,62 @@ use function PHPUnit\Framework\isEmpty;
 class SuatChieuController extends Controller
 {
 
-    /**
-     * Lấy danh sách suất chiếu theo mã phim
+      /**
+     * Lấy danh sách suất chiếu theo mã phim và (tuỳ chọn) ngày chiếu
+     * 
      * @OA\Get(
      *     path="/api/suatchieu/phim/{ma_phim}",
      *     summary="Lấy danh sách suất chiếu theo mã phim",
-     *     description="API này dùng để lấy tất cả suất chiếu cho một phim.",
+     *     description="API này dùng để lấy tất cả suất chiếu của một phim, có thể lọc theo ngày chiếu.",
      *     tags={"Suất Chiếu"},
+     * 
      *     @OA\Parameter(
      *         name="ma_phim",
      *         in="path",
      *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             example="PH001"
-     *         )
+     *         description="Mã phim cần tìm suất chiếu",
+     *         @OA\Schema(type="string", example="PH001")
      *     ),
+     * 
+     *     @OA\Parameter(
+     *         name="ngay_chieu",
+     *         in="query",
+     *         required=false,
+     *         description="Lọc theo ngày chiếu (định dạng: YYYY-MM-DD)",
+     *         @OA\Schema(type="string", format="date", example="2025-04-12")
+     *     ),
+     * 
      *     @OA\Response(
      *         response=200,
-     *         description="Danh sách suất chiếu của phim",
+     *         description="Danh sách suất chiếu theo rạp (trống nếu không có dữ liệu)",
      *         @OA\JsonContent(
-     *             @OA\Property(property="ma_rap", type="string", example="RP001"),
-     *             @OA\Property(property="ten_rap", type="string", example="Rạp Phim ABC"),
-     *             @OA\Property(property="dia_chi", type="string", example="123 Đường ABC, Quận 1, TP.HCM"),
-     *             @OA\Property(
-     *                 property="suat_chieu",
-     *                 type="array",
-     *                 @OA\Items(
-     *                     @OA\Property(property="ma_suat_chieu", type="string", example="SC001"),
-     *                     @OA\Property(property="ma_phong", type="string", example="P001"),
-     *                     @OA\Property(property="phong", type="string", example="Phòng 1"),
-     *                     @OA\Property(property="thoi_gian_bd", type="string", example="10:00"),
-     *                     @OA\Property(property="ngay_chieu", type="string", example="12-04-2025")
+     *             type="array",
+     *             @OA\Items(
+     *                 @OA\Property(property="ma_rap", type="string", example="RP001"),
+     *                 @OA\Property(property="ten_rap", type="string", example="Rạp Galaxy Nguyễn Du"),
+     *                 @OA\Property(property="dia_chi", type="string", example="123 Nguyễn Du, Q.1, TP.HCM"),
+     *                 @OA\Property(
+     *                     property="suat_chieu",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="ma_suat_chieu", type="string", example="SC001"),
+     *                         @OA\Property(property="ma_phong", type="string", example="P001"),
+     *                         @OA\Property(property="phong", type="string", example="Phòng 1"),
+     *                         @OA\Property(property="thoi_gian_bd", type="string", example="14:00"),
+     *                         @OA\Property(property="ngay_chieu", type="string", example="12-04-2025")
+     *                     )
      *                 )
      *             )
      *         )
      *     ),
+     * 
      *     @OA\Response(
-     *         response=404,
-     *         description="Không có suất chiếu cho phim này",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Không có suất chiếu cho phim này")
-     *         )
+     *         response=500,
+     *         description="Lỗi hệ thống"
      *     )
      * )
      */
+
 
     public function getByPhim($ma_phim, Request $request)
     {
