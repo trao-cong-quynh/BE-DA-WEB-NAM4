@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Phim as PhimModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 
 class PhimController extends Controller
@@ -34,7 +35,13 @@ class PhimController extends Controller
 
     public function index()
     {
-        $phim = PhimModel::all();
+        $now = Carbon::now();
+        $phim = PhimModel::whereHas('suat_chieus', function($query) use ($now){
+            $query ->whereRaw("STR_TO_DATE(CONCAT(ngay_chieu,' ',thoi_gian_bd), '%Y-%m-%d %H:%i:%s') >= ?", [$now]);
+        })->get();
+
+
+        
         return response()->json($phim);
     }
 

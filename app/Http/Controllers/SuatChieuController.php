@@ -56,11 +56,15 @@ class SuatChieuController extends Controller
      * )
      */
 
-    public function getByPhim($ma_phim)
+    public function getByPhim($ma_phim, Request $request)
     {
-        $suatchieu = SuatChieu::with(['phong_chieu.rap_phim'])->where('ma_phim', $ma_phim)->get();
+        $ngay_chieu = $request->query('ngay_chieu');
+        \Log::info('Ngày chiếu truyền vào:', ['ngay_chieu' => $ngay_chieu]);
+        $suatchieu = SuatChieu::with(['phong_chieu.rap_phim'])->where('ma_phim', $ma_phim)->when($ngay_chieu, function ($query) use ($ngay_chieu) {
+            return $query->whereDate('ngay_chieu', $ngay_chieu);
+        })->get();
         if ($suatchieu->isEmpty()) {
-            return response()->json(['message' => 'không có suất chiếu cho phim này'], 404);
+            return response()->json([]); // hoặc: return response()->json(['data' => []]);
         }
 
         $data = [];

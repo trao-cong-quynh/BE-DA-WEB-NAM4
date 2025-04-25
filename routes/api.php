@@ -2,10 +2,12 @@
 
 
 use App\Http\Controllers\BookTicketController;
+use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DichVuAnUongController;
 use App\Http\Controllers\GheController;
 use App\Http\Controllers\LoaiVeController;
 use App\Http\Controllers\MoMoPaymentController;
+use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\RapPhimController;
@@ -35,3 +37,7 @@ Route::prefix('')->group(function () {
     Route::post('callback', [MoMoPaymentController::class, 'callback']);
     Route::post('checkTrasaction', [MoMoPaymentController::class, 'ipn']);
 });
+
+
+Route::post('/dangki', [NguoiDungController::class, 'DangKi']);
+Route::post('/dangnhap', [DangNhapController::class, 'dangNhap']);
