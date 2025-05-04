@@ -8,6 +8,7 @@ use App\Http\Controllers\GheController;
 use App\Http\Controllers\LoaiVeController;
 use App\Http\Controllers\MoMoPaymentController;
 use App\Http\Controllers\NguoiDungController;
+
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\RapPhimController;
@@ -36,6 +37,10 @@ Route::prefix('')->group(function () {
     Route::post('create-payment', [MoMoPaymentController::class, 'createPayment']);
     Route::post('callback', [MoMoPaymentController::class, 'callback']);
     Route::post('checkTrasaction', [MoMoPaymentController::class, 'ipn']);
+
+
+    // Route::get('/phim/top-ban-chay', [PhimController::class, 'top2BanChay']);
+
 });
 
 

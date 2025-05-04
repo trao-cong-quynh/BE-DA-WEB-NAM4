@@ -40,6 +40,8 @@ class DatVe extends Model
         return $this->belongsTo(SuatChieu::class, 'ma_suat_chieu');
     }
 
+
+
     public function nguoi_dung()
     {
         return $this->belongsTo(NguoiDung::class, 'ma_nguoi_dung');
@@ -56,4 +58,6 @@ class DatVe extends Model
     {
         return $this->hasMany(VeDat::class, 'ma_ve');
     }
+
+
 }
